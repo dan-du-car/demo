@@ -9,6 +9,9 @@ on:
 jobs:
   sonar: # sonar job is to setup and run sonar scan analysis on telematic cloud messaging code
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: /home/runner/work/demo/demo
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,6 +29,10 @@ jobs:
         shell: bash
         run: |
           find "$GITHUB_WORKSPACE" -name "lcov.info"   
+      - name: Find properties
+        shell: bash
+        run: |
+          find "$GITHUB_WORKSPACE" -name "sonar-scanner.properties"   
       
       # Setup sonar-scanner
       - name: SonarQube Scan
@@ -34,4 +41,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
         with:
-            projectBaseDir: .
+            projectBaseDir: ./
