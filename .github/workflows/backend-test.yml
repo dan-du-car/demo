@@ -37,6 +37,6 @@ jobs:
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=$GITHUB_WORKSPACE/backend/http-server-js/foo/coverage/lcov.info
             -Dsonar.sources=$GITHUB_WORKSPACE/backend/http-server-js/foo
             -Dsonar.exclusions=$GITHUB_WORKSPACE/backend/http-server-js/foo/tests/**
