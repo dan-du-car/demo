@@ -17,6 +17,7 @@ jobs:
             node-version: ${{ matrix.node-version }}
       - name: Run test and generate coverage
         run: |
+            cd cd $GITHUB_WORKSPACE/backend/http-server-js/foo
             npm install
             npm run coverage     
       - name: Find lcov.info
