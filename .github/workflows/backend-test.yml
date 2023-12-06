@@ -34,4 +34,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
         with:
-            projectBaseDir: ${{ GITHUB_REPOSITORY }}
+            projectBaseDir: $GITHUB_REPOSITORY
