@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetchepth: 0 
+          fetch-depth: 0 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -26,26 +26,21 @@ jobs:
         shell: bash
         run: |
           find "$GITHUB_WORKSPACE" -name "lcov.info"   
-      - name: Generate sonar properties file
-        run: |
-          cat <<EOF > /tmp/sonar-scanner.properties
-            sonar.host.url=${{ secrets.SONAR_URL }}
-            sonar.login=${{ secrets.SONAR_TOKEN }}
-            sonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            sonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            sonar.sources=$GITHUB_WORKSPACE
-            sonar.javascript.lcov.reportPaths=./coverage/lcov.info
-            sonar.modules=foo
-            foo.sonar.projectBaseDir=backend/http-server-js/foo
-            foo.sonar.sources=.
-            foo.sonar.exclusions=test/**
-            foo.sonar.tests=test/
-          EOF
+      
       # Setup sonar-scanner
-      - name: Run SonarScanner
-        uses: usdot-fhwa-stol/actions/sonar-scanner@main
-        with:
-          sonar-properties-path: /tmp/sonar-scanner.properties
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          working-dir: $GITHUB_WORKSPACE
-            
+      - name: Setup SonarQube
+        uses: warchant/setup-sonar-scanner@v7
+      # Run sonar-scanner
+      - name: SonarQube Scan
+        run: sonar-scanner
+            -Dsonar.host.url=${{ secrets.SONAR_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.sources=$GITHUB_WORKSPACE
+            -Dsonar.javascript.lcov.reportPaths=$GITHUB_WORKSPACE/telematic_system/telematic_apps/web_app/coverage/lcov.info
+            # -Dsonar.modules=foo
+            # foo.sonar.projectBaseDir=backend/http-server-js/foo
+            # foo.sonar.sources=.
+            # foo.sonar.exclusions=test/**
+            # foo.sonar.tests=test/
