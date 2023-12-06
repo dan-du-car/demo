@@ -11,10 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-node@v3
         with:
-            node-version: ${{ matrix.node-version }}
+          fetch-depth: 0 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: 18
       - name: Run test and generate coverage
         run: |
             cd $GITHUB_WORKSPACE/backend/http-server-js/foo
@@ -23,9 +25,9 @@ jobs:
       - name: Find lcov.info
         shell: bash
         run: |
-          find "$GITHUB_WORKSPACE" -name "lcov.info"     
-      - name: Run SonarScanner
-        uses: warchant/setup-sonar-scanner@v7
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
-          working-dir: $GITHUB_WORKSPACE
+          find "$GITHUB_WORKSPACE" -name "lcov.info"   
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
