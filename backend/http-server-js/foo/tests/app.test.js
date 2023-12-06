@@ -1,6 +1,5 @@
 var app = require('../app')
 var request = require('supertest')
-require("dotenv").config();
 
 describe('GET /', () => {
   test('GET /', async () => {
