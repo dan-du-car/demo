@@ -25,7 +25,7 @@ jobs:
             cd $GITHUB_WORKSPACE/backend/http-server-js/foo
             npm install
             npm run coverage    
-            ls /github/workspace
+            ls -a
       - name: Find lcov.info
         shell: bash
         run: |
