@@ -1,0 +1,30 @@
+name: "CI: testing"
+
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - "feature"
+
+jobs:
+  sonar: # sonar job is to setup and run sonar scan analysis on telematic cloud messaging code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-node@v3
+        with:
+            node-version: ${{ matrix.node-version }}
+      - name: Run test and generate coverage
+        run: |
+            npm ci
+            npm run coverage     
+      - name: Find lcov.info
+        shell: bash
+        run: |
+          find "$GITHUB_WORKSPACE" -name "lcov.info"     
+      - name: Run SonarScanner
+        uses: dan-du-car/actions/sonar-scanner@main
+        with:
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          working-dir: $GITHUB_WORKSPACE
