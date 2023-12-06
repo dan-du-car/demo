@@ -37,10 +37,9 @@ jobs:
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=$GITHUB_WORKSPACE
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
             # -Dsonar.modules=foo
-            # foo.sonar.projectBaseDir=backend/http-server-js/foo
-            # foo.sonar.sources=.
-            # foo.sonar.exclusions=test/**
-            # foo.sonar.tests=test/
+            # -Dsonar.projectBaseDir=backend/http-server-js/foo
+            -Dsonar.sources=$GITHUB_WORKSPACE/backend/http-server-js/foo
+            -Dsonar.exclusions=$GITHUB_WORKSPACE/backend/http-server-js/foo/test/**
+            -Dsonar.tests=$GITHUB_WORKSPACE/backend/http-server-js/foo/test/
