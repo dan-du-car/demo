@@ -29,6 +29,7 @@ jobs:
         shell: bash
         run: |
           find "$GITHUB_WORKSPACE" -name "lcov.info"   
+          pwd
       - name: Find properties
         shell: bash
         run: |
