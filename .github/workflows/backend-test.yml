@@ -29,8 +29,6 @@ jobs:
         shell: bash
         run: |
           find "$GITHUB_WORKSPACE" -name "lcov.info"   
-          echo $GITHUB_WORKSPACE
-          echo $GITHUB_REPOSITORY
       - name: Find properties
         shell: bash
         run: |
@@ -43,4 +41,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
         with:
-            projectBaseDir: /home/runner/work/demo/demo/
+            projectBaseDir: ./
