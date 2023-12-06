@@ -28,15 +28,10 @@ jobs:
           find "$GITHUB_WORKSPACE" -name "lcov.info"   
       
       # Setup sonar-scanner
-      - name: Setup SonarQube
-        uses: warchant/setup-sonar-scanner@v7
-      # Run sonar-scanner
       - name: SonarQube Scan
-        run: sonar-scanner
-            -Dsonar.host.url=${{ secrets.SONAR_URL }}
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.javascript.lcov.reportPaths=$GITHUB_WORKSPACE/backend/http-server-js/foo/coverage/lcov.info
-            -Dsonar.sources=$GITHUB_WORKSPACE/backend/http-server-js/foo
-            -Dsonar.exclusions=$GITHUB_WORKSPACE/backend/http-server-js/foo/tests/**
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+        with:
+            projectBaseDir: $GITHUB_WORKSPACE
