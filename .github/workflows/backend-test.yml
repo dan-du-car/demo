@@ -43,7 +43,7 @@ jobs:
           EOF
       # Setup sonar-scanner
       - name: Run SonarScanner
-        uses: warchant/setup-sonar-scanner@main
+        uses: warchant/setup-sonar-scanner@v7
         with:
           sonar-properties-path: /tmp/sonar-scanner.properties
           sonar-token: ${{ secrets.SONAR_TOKEN }}
